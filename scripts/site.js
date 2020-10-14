@@ -111,7 +111,7 @@ function loadApplication() {
 
         var riskLabel = document.getElementById("riskSummary");
         riskLabel.style.display = "block";
-        riskLabel.innerText = generateRickProfile(la); 
+        riskLabel.innerHTML = generateRickProfile(la); 
 
     }
 }
@@ -356,10 +356,29 @@ function generateRickProfile(la) {
         riskProfile = "high";
     }
 
-    var summaryText = "Dear " + la.ApplicantName + ", " + reviewText + " Your risk profile is " + riskProfile;
-
+    //var summaryText = "Dear " + la.ApplicantName + ", " + reviewText + " Your risk profile is " + riskProfile;
+    // This is called template literal
+    // See that the line break is interpreted as a real line break in the result
+    // ` is called backticks
+    // ${...} is called interpolation
+    var summaryText = highlightText `Dear ${la.ApplicantName}, ${reviewText}  <br>
+    Your risk profile is ${riskProfile}`;
     return summaryText;
-}
 
+}
+// This function will turn in bold all values (that are between ${}) in the template literal
+function highlightText(strings, ...values)
+{
+    let str = "";
+    for(var i=0; i<strings.length; i++)
+    {
+        if(i>0)
+        {
+            str+= `<b>${values[i-1]}</b>`;
+        }
+        str += strings[i];
+    }
+    return str;
+}
 
 
